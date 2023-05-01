@@ -1,0 +1,37 @@
+name: Build and push Docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  x86_64:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile.x86_64 --tag imlightymc/minty
+      - name: Login to docker.io
+        run: docker login -u imlightymc -p ${{ secrets.DOCKER_KEY }}
+      - name: Push the Docker image
+        run: docker push imlightymc/minty:x86_64
+
+  arm64:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_TARGET_PLATFORM: linux/arm64
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile.arm64 --tag imlightymc/minty
+      - name: Tag the Docker image
+        run: docker tag imlightymc/minty imlightymc/minty:arm64
+      - name: Login to docker.io
+        run: docker login -u imlightymc -p ${{ secrets.DOCKER_KEY }}
+      - name: Push the Docker image
+        run: docker push imlightymc/minty:arm64
