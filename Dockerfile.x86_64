@@ -1,7 +1,17 @@
-FROM jarredsumner/bun:edge
+ARG BUN_VERSION=v0.6.2
+
+FROM --platform=linux/x86_64 debian:stable-slim AS get
+ARG BUN_VERSION
+
+WORKDIR /tmp/
+RUN apt-get update && apt-get install -y wget unzip
+RUN wget -q https://github.com/oven-sh/bun/releases/download/bun-${BUN_VERSION}/bun-linux-x64-baseline-profile.zip \
+ && unzip bun-linux-x64-baseline-profile.zip && mv ./bun-linux-x64-baseline-profile/bun /tmp/bun
+
+FROM --platform=linux/x86_64 debian:stable-slim
+COPY --from=get /tmp/bun /usr/local/bin
 
 WORKDIR /opt/app
-
 COPY . .
 
 RUN bun install

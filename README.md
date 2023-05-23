@@ -1,15 +1,6 @@
-# mintyapi
+# Minty
 
-To install dependencies:
+A simple, lightweight API for all things Apexie!
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v0.4.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## How to install
+You can deploy our [container image](https://hub.docker.com/r/imlightymc/minty), which will make things easier. Keep in mind that the API will run on port 3000.
