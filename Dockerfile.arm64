@@ -1,4 +1,4 @@
-ARG BUN_VERSION=v0.6.2
+ARG BUN_VERSION=v0.6.3
 
 FROM --platform=linux/arm64 debian:stable-slim AS get
 ARG BUN_VERSION
